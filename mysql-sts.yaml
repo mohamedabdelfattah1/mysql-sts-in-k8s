@@ -4,9 +4,8 @@ metadata:
   name: mysqlpwd
 type: Opaque
 data:
-  password: TW9oYW1lZCBBYmRlbGZhdHRhaAo=
+  password: TW9oYW1lZCBBYmRlbGZhdHRhaAo= 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -22,7 +21,6 @@ spec:
     protocol: TCP
   clusterIP: "None"
 ---
-
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -41,26 +39,28 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: db-mysql
-        image: mysql:8.0 
+        image: mysql:latest
         ports:
         - containerPort: 3306
           name: db-mysql
         env:
-          - name: MYSQL_ROOT_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: mysqlpwd
-                key: password
-          - name: MYSQL_DATABASE
-            value: "db_db"
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom: 
+            secretKeyRef:
+              name: mysqlpwd
+              key: password
+        - name: MYSQL_DATABASE
+          value: "db_db"
         volumeMounts:
-          - mountPath: /var/lib/mysql
-            name: db-volume
+        - name: db-volume
+          mountPath: /var/lib/mysql
   volumeClaimTemplates:
   - metadata:
       name: db-volume
     spec:
+      storageClassName: "standard"
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
           storage: 1Gi
+
