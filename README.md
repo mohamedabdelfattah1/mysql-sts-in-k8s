@@ -16,7 +16,7 @@ This Kubernetes manifest deploys a MySQL database as a StatefulSet. It includes:
 
 3. **StatefulSet**:
    - Manages MySQL Pods with a PersistentVolume for data storage.
-   - Uses the `mysql:8.0` image and sets environment variables for the root password and database name.
+   - Uses the `mysql:latest` image and sets environment variables for the root password and database name.
 
 
 ## How to Deploy
